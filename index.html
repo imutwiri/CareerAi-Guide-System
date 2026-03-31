@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerAI Kenya — Your AI Career Guide</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="app">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🎯</div>
+            Career<span>AI</span>&nbsp;Kenya
+        </div>
+        <div class="header-right">
+            <span class="badge">✦ AI-Powered</span>
+        </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav>
+        <button class="tab active" onclick="showPanel('chat', this)">💬 Career Chat</button>
+        <button class="tab" onclick="showPanel('trends', this)">📊 Job Market Trends</button>
+        <button class="tab" onclick="showPanel('gap', this)">🔍 Skills Gap Analyzer</button>
+        <button class="tab" onclick="showPanel('courses', this)">🎓 Course Recommendations</button>
+    </nav>
+
+    <main>
+
+        <!-- ══════════════ PANEL: CHAT ══════════════ -->
+        <div id="panel-chat" class="panel active">
+            <h1 class="page-title">Career Chat</h1>
+            <p class="page-subtitle">Ask anything about careers, salaries and opportunities in the Kenyan job market.</p>
+
+            <div class="quick-prompts">
+                <button class="quick-btn" onclick="sendQuick('What are the highest paying careers in Kenya right now?')">💼 Highest paying careers</button>
+                <button class="quick-btn" onclick="sendQuick('How do I transition from engineering to software development in Kenya?')">🔄 Career transition tips</button>
+                <button class="quick-btn" onclick="sendQuick('What skills do Kenyan employers look for most in 2025?')">⭐ In-demand skills</button>
+                <button class="quick-btn" onclick="sendQuick('How do I prepare for a job interview at a Kenyan tech company?')">🎤 Interview prep</button>
+                <button class="quick-btn" onclick="sendQuick('What remote jobs can I do as a Kenyan graduate?')">🌍 Remote work options</button>
+            </div>
+
+            <div class="card chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai">
+                        <div class="avatar ai-av">🤖</div>
+                        <div class="bubble">
+                            Hello! I'm CareerAI Kenya — your personal AI career counselor. I'm specialized in the Kenyan job market, local universities, salaries and career paths across sectors like tech, finance, agri-business, healthcare and NGOs.<br><br>
+                            What career questions can I help you with today?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <textarea class="chat-input" id="chatInput" placeholder="Ask about careers, skills, salaries in Kenya…" rows="1"
+                        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendChat()">➤</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════ PANEL: TRENDS ══════════════ -->
+        <div id="panel-trends" class="panel">
+            <h1 class="page-title">Job Market Trends</h1>
+            <p class="page-subtitle">Real-time AI analysis of Kenya's employment landscape and most in-demand skills.</p>
+
+            <div class="stat-row">
+                <div class="stat-box"><div class="stat-num">2.4M</div><div class="stat-label">Graduates Annually (Kenya)</div></div>
+                <div class="stat-box"><div class="stat-num">34%</div><div class="stat-label">Youth Unemployment Rate</div></div>
+                <div class="stat-box"><div class="stat-num">KES 85K</div><div class="stat-label">Avg. Tech Monthly Salary</div></div>
+                <div class="stat-box"><div class="stat-num">↑ 62%</div><div class="stat-label">Remote Jobs Growth</div></div>
+            </div>
+
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <h3>🔥 Top In-Demand Jobs</h3>
+                    <div id="demandBars"><div class="loading"><div class="spinner"></div>Loading market data…</div></div>
+                </div>
+                <div class="trend-card">
+                    <h3>⚡ Fastest Growing Skills</h3>
+                    <div id="skillsBars"><div class="loading"><div class="spinner"></div>Analyzing skills data…</div></div>
+                </div>
+                <div class="trend-card full-col">
+                    <h3>💡 AI Market Insights</h3>
+                    <div id="marketInsights"><div class="loading"><div class="spinner"></div>Generating insights…</div></div>
+                </div>
+            </div>
+
+            <button class="refresh-btn" onclick="loadTrends()">🔄 &nbsp;Refresh AI Analysis</button>
+        </div>
+
+        <!-- ══════════════ PANEL: SKILLS GAP ══════════════ -->
+        <div id="panel-gap" class="panel">
+            <h1 class="page-title">Skills Gap Analyzer</h1>
+            <p class="page-subtitle">Tell me your current skills and target career — I'll show you exactly what's missing.</p>
+
+            <div class="card">
+                <div class="skills-form">
+                    <div class="form-group">
+                        <label>🎯 Target Career / Job Role</label>
+                        <input class="form-input" id="targetCareer" placeholder="e.g. Data Scientist, Software Engineer, Accountant…">
+                    </div>
+                    <div class="form-group">
+                        <label>🎓 Current Education</label>
+                        <input class="form-input" id="education" placeholder="e.g. BSc Computer Science, Year 3 at Strathmore">
+                    </div>
+                    <div class="form-group full">
+                        <label>🛠️ Your Current Skills <span class="label-hint">(comma-separated)</span></label>
+                        <textarea class="form-textarea" id="currentSkills" placeholder="e.g. Python, Microsoft Excel, Public Speaking, MySQL, HTML, CSS, Git…"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>📅 Years of Experience</label>
+                        <input class="form-input" id="experience" placeholder="e.g. 0 (fresh graduate), 1, 3…">
+                    </div>
+                    <div class="form-group">
+                        <label>🏢 Preferred Industry</label>
+                        <input class="form-input" id="industry" placeholder="e.g. Fintech, NGO, Healthcare, Government…">
+                    </div>
+                </div>
+                <button class="analyze-btn" id="analyzeBtn" onclick="analyzeGap()">🔍 &nbsp;Analyze My Skills Gap</button>
+            </div>
+
+            <div id="gapResults" class="gap-results"></div>
+        </div>
+
+        <!-- ══════════════ PANEL: COURSES ══════════════ -->
+        <div id="panel-courses" class="panel">
+            <h1 class="page-title">Course Recommendations</h1>
+            <p class="page-subtitle">AI-curated courses and certifications to boost your employability in Kenya.</p>
+
+            <div class="courses-filter">
+                <button class="filter-chip active" data-cat="Technology & Software Development">💻 Technology</button>
+                <button class="filter-chip" data-cat="Data Science & Analytics">📊 Data Science</button>
+                <button class="filter-chip" data-cat="Business, Finance & Accounting">💼 Business & Finance</button>
+                <button class="filter-chip" data-cat="Digital Marketing & Social Media">📱 Digital Marketing</button>
+                <button class="filter-chip" data-cat="Healthcare & Public Health">🏥 Healthcare</button>
+                <button class="filter-chip" data-cat="Agriculture & Environmental Science">🌿 Agriculture</button>
+            </div>
+
+            <div id="coursesGrid" class="courses-grid">
+                <div class="loading"><div class="spinner"></div>Loading recommendations…</div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- JavaScript Modules -->
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/trends.js"></script>
+<script src="js/gap.js"></script>
+<script src="js/courses.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

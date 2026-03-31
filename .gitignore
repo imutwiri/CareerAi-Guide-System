@@ -1,0 +1,21 @@
+# API keys + env
+js/config.js
+.env
+
+# Node / JS dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# IDE config
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
