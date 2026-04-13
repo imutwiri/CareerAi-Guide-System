@@ -14,7 +14,6 @@ const panelLoaded = {
 
 /**
  * Switch the active panel when a navigation tab is clicked.
- * Lazy-loads data for Trends and Courses on first visit.
  *
  * @param {string} panelId - One of: 'chat', 'trends', 'gap', 'courses'
  * @param {HTMLElement} clickedTab - The tab button that was clicked
@@ -45,7 +44,7 @@ function showPanel(panelId, clickedTab) {
     }
 }
 
-// ── Startup checks ────────────────────────────────────────────
+// ── Startup checks ───
 document.addEventListener('DOMContentLoaded', () => {
     // Warn the user if the API key hasn't been configured
     if (!CONFIG.API_KEY || CONFIG.API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
